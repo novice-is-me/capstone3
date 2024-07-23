@@ -8,7 +8,7 @@ const ProductsCatalogCards = ({product}) => {
 
   return (
     <>
-    <Card style={{width: '20rem'}}>
+        <Card style={{width: '20rem'}}>
             <Card.Body className='d-flex flex-column gap-2'>
                 <Card.Title className=' text-primary fs-2 text-center'>{name}</Card.Title>
                 <Card.Subtitle className='fs-4'>Description:</Card.Subtitle>

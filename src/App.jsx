@@ -6,6 +6,7 @@ import { Container } from 'react-bootstrap';
 import ProductsCatalog from './pages/ProductsCatalog';
 import { UserProvider } from './UserContext';
 import ProductsView from './components/ProductsView';
+import Register from './pages/Register';
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
           <Container>
             <Routes>
               <Route path='/login' element={<Login/>}/>
+              <Route path='/register' element={<Register/>}/>
               <Route path='/products-catalog' element={<ProductsCatalog/>}/>
               <Route path='/products/:productId' element={<ProductsView/>}/> 
             </Routes>

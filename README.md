@@ -1,8 +1,56 @@
-# React + Vite
+# ECommerceAPI: Demo-App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Team Members
+- **Regina Jalandoni**
+- **Richmore Jubert Ravina**
+
+
+## User Credentials
+- **Admin User**
+- **email**: admin@email.com
+- **password**: admin123
+
+
+- **Dummy Customer**
+- **email**: customer@mail.com
+- **password**: customer123
+
+
+
+# Features:
+## Features by Richmore Jubert Ravina
+### USER RESOURCES
+- **User Registration** 
+- **User Authentication** 
+- **Set user as admin (Admin only)**
+- **Retrieve User Details**
+- **Update Password**
+
+### PRODUCT RESOURCES
+- **Create Product (Admin only)**
+- **Retrieve all products (Admin only)**
+- **Retrieve all active products**
+- **Retrieve single product**
+- **Update Product information (Admin only)**
+- **Archive Product (Admin only)**
+- **Activate Product (Admin only)**
+
+## Features by Regina Jalandoni
+
+### CART RESOURCES
+- **Get User's Cart**
+- **Add to Cart**
+- **Subtotal for each items**
+- **Total price for all items**
+- **Change product quantities**
+- **Remove products from cart**
+- **Clear Cart**
+
+### ORDER RESOURCES
+- **Non-admin User checkout (Create Order)**
+- **Retrieve authenticated user's orders**
+- **Retrieve all orders (Admin only)**
+
+
