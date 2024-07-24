@@ -27,8 +27,8 @@ export default function AddProduct(){
 
             method: 'POST',
             headers: {
-                "Content-Type": "application/json",
-                'Authorization': `Bearer ${token}`
+                'Content-Type': "application/json",
+                Authorization: `Bearer ${token}`
             },
             body: JSON.stringify({
 
@@ -40,7 +40,7 @@ export default function AddProduct(){
         })
         .then(res => res.json())
         .then(data => {
-
+            console.log(data);  
             if(data.message === "Product already exists"){
 
                 Swal.fire({
@@ -49,7 +49,7 @@ export default function AddProduct(){
                     text: "Product already exists.",
                 });
 
-            } else if (data.success === true) {
+            } else if (data) {
                 
                 setName("")
                 setDescription("")
@@ -73,6 +73,10 @@ export default function AddProduct(){
                 });
 
             }
+
+            setName("");
+            setDescription("");
+            setPrice(0);
 
         })
 
@@ -119,7 +123,7 @@ export default function AddProduct(){
                 </Form>
             </>
             :
-            <Navigate to="/products-catalog" />
+            <Navigate to="/products" />
 
     )
 

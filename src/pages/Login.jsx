@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect, useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import UserContext from '../UserContext';
 
@@ -13,6 +13,8 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     const [isActive, setIsActive] = useState(true);
+
+    const navigate = useNavigate();
 
     const handleLogin = (e) =>{
 
@@ -40,6 +42,9 @@ const Login = () => {
                     icon: "success",
                     text: "You are now logged in."
                 })
+
+                navigate('/products'); 
+                
             } else if (data.message == "Incorrect email or password"){
                 Swal.fire({
                     title: "Login Failed",
@@ -65,11 +70,12 @@ const Login = () => {
         })
         .then(res => res.json())
         .then(data => {
-
+            console.log(data); 
             setUser({
-                id: data._id,
-                isAdmin: data.isAdmin
+                id: data.user._id,
+                isAdmin: data.user.isAdmin
             });
+            console.log(user);
         })
     }
 

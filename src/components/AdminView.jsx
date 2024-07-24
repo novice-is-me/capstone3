@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import EditProduct from './EditProduct';
 import ArchiveProduct from './ArchiveProduct';
+import { Link } from 'react-router-dom';
 
 export default function AdminView({ productsData, fetchData }) {
 
@@ -36,6 +37,16 @@ export default function AdminView({ productsData, fetchData }) {
     return(
         <>
             <h1 className="text-center my-4"> Admin Dashboard</h1>
+            <div className='d-flex border mb-5 justify-content-center gap-4'>
+                <Link 
+                    to='/addProduct'
+                    className=' btn btn-info'>Add New Product
+                </Link>
+                <Link 
+                    to='/user-order'
+                    className=' btn btn-warning'>Show Users Orders
+                </Link>
+            </div>
             
             <Table striped bordered hover responsive>
                 <thead>

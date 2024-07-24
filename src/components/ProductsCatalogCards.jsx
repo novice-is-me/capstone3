@@ -22,13 +22,4 @@ const ProductsCatalogCards = ({productProp}) => {
   )
 }
 
-// ProductsCatalogCards.propTypes = {
-//   // The "shape" method is used to check if a prop object conforms to a specific "shape"
-//   productProp: PropTypes.shape({
-//       // Define the properties and their expected types
-//       name: PropTypes.string.isRequired,
-//       description: PropTypes.string.isRequired,
-//       price: PropTypes.number.isRequired
-//   })
-// }
 export default ProductsCatalogCards

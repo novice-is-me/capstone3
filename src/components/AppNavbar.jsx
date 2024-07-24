@@ -31,7 +31,7 @@ export default function AppNavbar(){
                         </>
                         :
                         <>
-                            <Nav.Link as={NavLink} to="/products-catalog" exact="true">Products</Nav.Link>
+                            <Nav.Link as={NavLink} to="/products" exact="true">Products</Nav.Link>
                             {/* <Nav.Link as={NavLink} to="/profile" exact="true">Profile</Nav.Link> */}
                             <Nav.Link as={NavLink} to="/logout" exact="true">Logout</Nav.Link>
                         </>
