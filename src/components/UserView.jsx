@@ -24,8 +24,11 @@ export default function UserView({productsData}) {
     }, [productsData])
 
     return(
-        <>
-            { products }
-        </>
+        <div className='p-5'>
+            <h1 className=' text-danger text-uppercase fw-bold'>Our Products</h1> 
+            <div className='d-flex justify-content-evenly my-5'> 
+                {products}
+            </div>
+        </div>
     )
 }

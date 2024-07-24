@@ -1,32 +1,31 @@
 import {useState} from 'react';
 import {Button, Modal, Form} from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 export default function EditProduct({product, fetchData}){
 
 	// state for productId for the fetchURL
-	const [productId, setproductId] = useState('');
-
+	const [productId, setProductId] = useState('');
+	
+	// const { productId } = useParams();
 	// Forms State
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState(0);
 
-	// state for editproduct modals to open/close
 	const [showEdit, setShowEdit] = useState(false);
 
-	// function for opening the modal
 	const openEdit = (productId) => {
-		// to still get the actual data from the form
-		fetch(`http://localhost:4005/b5/products/specific/${productId}`)
+
+		fetch(`http://localhost:4005/b5/products/${productId}`)
 		.then(res => res.json())
 		.then(data => {
-			// populate all the input values with the product info that we fetched
-			// console.log(data);
-			setproductId(data._id);
-			setName(data.name);
-			setDescription(data.description);
-			setPrice(data.price)
+			
+			setProductId(data.product._id);  
+			setName(data.product.name);
+			setDescription(data.product.description);
+			setPrice(data.product.price)
 		})
 		// Then, open the modal
 		setShowEdit(true);
@@ -58,7 +57,7 @@ export default function EditProduct({product, fetchData}){
 		.then(res => res.json())
 		.then(data => {
 			console.log(data);
-			if(data.message === "product updated successfully"){
+			if(data.message === "Product updated successfully"){
 
 				Swal.fire({
 					title: 'Success!',
@@ -83,7 +82,7 @@ export default function EditProduct({product, fetchData}){
 	return(
 		<>
 			<Button variant="primary" size="sm" onClick={() => openEdit(product)}>Edit</Button>
-
+ 
 			{/*EDIT MODAL*/}
             <Modal show={showEdit} onHide={closeEdit}>
                 <Form onSubmit={e => editproduct(e, productId)}>

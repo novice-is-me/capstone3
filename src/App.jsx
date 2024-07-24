@@ -9,9 +9,9 @@ import ProductsView from "./components/ProductsView";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
-import ProductsCatalog from "./pages/ProductsCatalog";
 import AddProduct from "./pages/AddProduct";
 import Products from "./pages/Products";
+import UserOrder from "./components/UserOrder";
 
 
 function App() {
@@ -48,8 +48,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log('use effect appjsx');
+    console.log(user);
+    console.log(localStorage);
   }, [user]);
+
+  console.log(user); 
 
   return (
     <>
@@ -61,10 +64,10 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/products-catalog" element={<ProductsCatalog />} />
               <Route path="/products/:productId" element={<ProductsView />} />
               <Route path='/products' element={<Products/>}/>
               <Route path='/addProduct' element={<AddProduct/>}/> 
+              <Route path='/user-order' element={<UserOrder/>}/>
             </Routes>
           </Container>
         </Router>

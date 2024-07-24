@@ -23,8 +23,9 @@ export default function Products() {
         })
         .then(res => res.json())
         .then(data => {
-    
+            console.log(data);
             if (data.message === "No products found") {
+                console.log(data.message);
                 setProducts([]);
             } else {
                 setProducts(data.products); 
