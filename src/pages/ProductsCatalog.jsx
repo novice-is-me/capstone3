@@ -14,7 +14,6 @@ const ProductsCatalog = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
             setProducts(data.products.map(product =>{
                 return (
                     <ProductsCatalogCards key={product._id} product={product}/>

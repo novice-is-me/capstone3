@@ -29,7 +29,6 @@ const Login = () => {
         })
         .then(res => res.json())
         .then(data =>{
-            console.log(data) 
             if(data.access !== undefined){
                 localStorage.setItem('token', data.access);
                 retrieveUserDetails(data.access);
@@ -55,9 +54,6 @@ const Login = () => {
                 })
             }
         })
-
-        console.log(email);
-        console.log(password); 
     }
 
     function retrieveUserDetails(token){
@@ -69,7 +65,6 @@ const Login = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
 
             setUser({
                 id: data._id,
@@ -90,7 +85,7 @@ const Login = () => {
 
   return (
     (user.id !== null && user.id !== undefined)
-    ? <Navigate to="/products-catalog"/>
+    ? <Navigate to="/products"/>
     :
     <>  
         <h1 className="my-5 text-center">Login</h1>
