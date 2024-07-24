@@ -27,7 +27,6 @@ const ProductsView = () => {
         })
         .then(res => res.json())
         .then(data =>{
-            console.log(data) 
             setName(data.product.name);
             setDescription(data.product.description);
             setPrice(data.product.price);
@@ -50,7 +49,7 @@ const ProductsView = () => {
             icon: "success",
             text: `Total items in cart ${quantity}` 
         })
-        navigate('/products-catalog'); 
+        navigate('/products'); 
     }
 
   return (
