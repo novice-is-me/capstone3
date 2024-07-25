@@ -27,7 +27,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetch("http://localhost:4005/b5/users/details", {
+    fetch(`${import.meta.env.VITE_API_URL}/users/details`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

@@ -18,7 +18,7 @@ export default function EditProduct({product, fetchData}){
 
 	const openEdit = (productId) => {
 
-		fetch(`http://localhost:4005/b5/products/${productId}`)
+		fetch(`${import.meta.env.VITE_API_URL}/products/${productId}`)
 		.then(res => res.json())
 		.then(data => {
 			
@@ -42,7 +42,7 @@ export default function EditProduct({product, fetchData}){
 	// function to update/edit the product
 	const editproduct = (e, productId) => {
 		e.preventDefault();
-		fetch(`http://localhost:4005/b5/products/${productId}/update`, {
+		fetch(`${import.meta.env.VITE_API_URL}/products/${productId}/update`, {
 			method: "PATCH",
 			headers: {
 				'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export default function EditProduct({product, fetchData}){
 
 	return(
 		<>
-			<Button variant="primary" size="sm" onClick={() => openEdit(product)}>Edit</Button>
+			<Button variant="primary" size="sm" onClick={() => openEdit(product)}>Update</Button>
  
 			{/*EDIT MODAL*/}
             <Modal show={showEdit} onHide={closeEdit}>

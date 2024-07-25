@@ -20,7 +20,7 @@ const ProductsView = () => {
     const [quantity, setQuantity] = useState(1);
 
     useEffect(() =>{
-        fetch('http://localhost:4005/b5/products/' + productId, {
+        fetch(`${import.meta.env.VITE_API_URL}/products/` + productId, {
             headers:{
                 'Content-Type': 'application/json'
             }
@@ -44,7 +44,7 @@ const ProductsView = () => {
     }
 
     const handleAddToCart = () =>{
-        fetch('http://localhost:4005/b5/cart/add-to-cart', {
+        fetch(`${import.meta.env.VITE_API_URL}/cart/add-to-cart`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import UserContext from '../UserContext'
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { Button, Table } from 'react-bootstrap';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const UserOrder = () => {
 
@@ -8,10 +10,16 @@ const UserOrder = () => {
     
     const [data, setData] = useState([]);
     
+    // For storing the data from the 2 fetch requests
     const [username, setUsername] = useState([]);
+    const [productName, setProductName] = useState([]);
+
+    // For storing the map data of username and productName
+    const userIdToName = [];
+    const productIdToName = [];
 
     useEffect(() =>{
-        fetch('http://localhost:4005/b5/order/all-orders',{
+        fetch(`${import.meta.env.VITE_API_URL}/order/all-orders`,{
             headers:{
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -23,9 +31,9 @@ const UserOrder = () => {
 
     },[])
 
-  // for fetching all profile
+  // for fetching all profile (admin only)
     useEffect(() =>{
-        fetch('http://localhost:4005/b5/users/profile', {
+        fetch(`${import.meta.env.VITE_API_URL}/users/profile`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -34,41 +42,74 @@ const UserOrder = () => {
             console.log(data);
             setUsername(data.users)
         })
-
     },[])
 
-    const userIdToName = [];
+    // for fetching all products (admin only)
+    useEffect(() =>{
+        fetch(`${import.meta.env.VITE_API_URL}/products/all`, {
+            headers:{
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            setProductName(data.products); 
+        })
+    },[])
 
-    // for mapping user id to user name
+    // To get the user name based on its ID
     username.forEach(user => {
-        console.log(user); 
         userIdToName[user._id] = `${user.firstName} ${user.lastName}`;
     });
-    
+
+    const productIdtoPrice = {}
+
+    // To get the product name based on its ID
+    productName.forEach(product =>{
+        productIdToName[product._id] = `${product.name}`;
+        productIdtoPrice[product._id] = `${product.price}`;
+    })
+
+    console.log(productIdtoPrice)
   return (
     // Papagandahin pa ang UI 
     (user.isAdmin)
     ? 
     <div className='p-5'>
-        <h1 className='text-center'>User Order Overview</h1>
+        <Button variant='dark' as={Link} to='/products'>
+            <FaArrowLeft/>
+        </Button>
+        <h1 className='text-center color-secondary mb-4'>User Order Overview</h1>
         {data.length > 0 
         ?
-        (data.map((order => {
-            return (
-                <div key={order._id}>
-                    <h2>User: {userIdToName[order.userId]}</h2>
-                    {order.productsOrdered.map((product) => (
-                        <>
-                        <p>User Order: {product.productId}</p>
-                        <p>Quantity: {product.quantity}</p>
-                        <p>Total:{product.subtotal}</p>
-                        </>
-                    ))}
-                    <p>Total Order: {order.totalPrice}</p>
-                    <p>Order Status: {order.status}</p>
-                </div>
-            )
-        })))
+        (data.map((order, i) => (
+            <div key={i} className='border p-3 my-2'>
+                {console.log(order)}
+                <h3 className=' mb-2 bg-orange-light p-2'>{userIdToName[order.userId]}</h3>
+                <Table>
+                    <thead>
+                        <tr className=' text-center'>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {order.productsOrdered.map((product, j) => (
+                            <tr key={j} className=' text-center'>
+                                <td>{productIdToName[product.productId]}</td>
+                                <td>&#8369; {productIdtoPrice[product.productId]}</td>
+                                <td>{product.quantity}</td>
+                                <td>&#8369; {product.subtotal}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+                <p className=' text-danger'><span className=' fw-bold'>Total Price:</span> &#8369;{order.totalPrice}</p>
+            </div>
+        )))
         : <h1>No user has an existing order</h1>
         }
     </div>

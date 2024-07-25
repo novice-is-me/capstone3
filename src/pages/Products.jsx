@@ -18,7 +18,7 @@ export default function Products() {
 
 
     const fetchData = () => {
-        let fetchUrl = user.isAdmin === true ? "http://localhost:4005/b5/products/all" : "http://localhost:4005/b5/products";
+        let fetchUrl = user.isAdmin === true ? `${import.meta.env.VITE_API_URL}/products/all` : `${import.meta.env.VITE_API_URL}/products`;
     
         fetch(fetchUrl, {
             headers: {
@@ -48,11 +48,13 @@ export default function Products() {
             {user.isAdmin ? (
                 <AdminView productsData={products} fetchData={fetchData} />
             ) : (
+                <>
                 <UserView productsData={products} />
+                <Link to="/get-cart" style={{ position: 'absolute', top: '20px', right: '20px', zIndex: '100' }}>
+                    <Button variant="success">View Cart</Button>
+                </Link>
+                </>
             )}
-            <Link to="/get-cart" style={{ position: 'absolute', top: '20px', right: '20px', zIndex: '100' }}>
-                <Button variant="success">View Cart</Button>
-            </Link>
         </div>
     );
 }

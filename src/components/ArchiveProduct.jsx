@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 export default function ArchiveProduct({product, isActive, fetchData}) {
 
     const archiveToggle = (productId) => {
-        fetch(`http://localhost:4005/b5/products/${productId}/archive`, {
+        fetch(`${import.meta.env.VITE_API_URL}/products/${productId}/archive`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export default function ArchiveProduct({product, isActive, fetchData}) {
 
 
     const activateToggle = (productId) => {
-        fetch(`http://localhost:4005/b5/products/${productId}/activate`, {
+        fetch(`${import.meta.env.VITE_API_URL}/products/${productId}/activate`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export default function ArchiveProduct({product, isActive, fetchData}) {
         <>
             {isActive ?
 
-                <Button variant="danger" size="sm" onClick={() => archiveToggle(product)}>Archive</Button>
+                <Button variant="danger" size="sm" onClick={() => archiveToggle(product)}>Disable</Button>
 
                 :
 
