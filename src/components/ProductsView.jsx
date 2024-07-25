@@ -44,12 +44,35 @@ const ProductsView = () => {
     }
 
     const handleAddToCart = () =>{
-        Swal.fire({
-            title: "Item Added to Cart Successfully",
-            icon: "success",
-            text: `Total items in cart ${quantity}` 
+        fetch('http://localhost:4005/b5/cart/add-to-cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify({
+                productId: productId,
+                quantity: quantity
+            })
         })
-        navigate('/products'); 
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            if (data.message === "Added to cart successfully") {
+                Swal.fire({
+                    title: "Item Added to Cart Successfully",
+                    icon: "success",
+                    text: `Total items in cart ${quantity}`
+                });
+                navigate('/products');
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    icon: "error",
+                    text: "Failed to add item to cart. Please try again."
+                });
+            }
+        })
     }
 
   return (
@@ -57,19 +80,19 @@ const ProductsView = () => {
     ? <Navigate to='/login'/> 
     : <div className='p-5'>
         <Card >
-        <Card.Header className='fs-2 text-center'>{name}</Card.Header>
+        <Card.Header className='fs-2 text-center bg-dark text-white'>{name}</Card.Header>
         <Card.Body>
-            <Card.Title className='fs-3'>{description}</Card.Title>
-            <Card.Text className='fs-4'>Price: 
+            <Card.Title className='fs-3 text-center'>{description}</Card.Title>
+            <Card.Text className='fs-4 text-center'>Price: 
                 <span className='text-danger'> &#8369;{price}</span>
             </Card.Text>
             <Card.Text className='fs-4'>Quantity:</Card.Text>
             <div className='d-flex border w-25 h-100 my-3'>
-                <p className=' w-100 bg-dark text-white m-0 text-center'
+                <p className=' w-25 bg-dark text-white m-0 text-center'
                     style={{cursor: 'pointer'}}
                     onClick={() => minusQuantity()}>-</p>
                 <p className=' w-100 text-center m-0'>{quantity}</p>
-                <p className=' w-100 bg-dark text-white m-0 text-center'
+                <p className=' w-25 bg-dark text-white m-0 text-center'
                     style={{cursor: 'pointer'}}
                     onClick={() => addQuantity()}>+</p>
             </div>
