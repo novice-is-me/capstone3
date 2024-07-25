@@ -1,13 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
 import UserContext from "../UserContext";
 import { Table, Button, Card } from "react-bootstrap";
 import Swal from "sweetalert2";
+import { FaArrowLeft, FaMinus, FaPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const CartView = () => {
   const { user } = useContext(UserContext);
   const [cart, setCart] = useState(null);
   const [totalQuantity, setTotalQuantity] = useState(0);
+
+  const [products, setProducts] = useState([]); 
+  const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
     fetchCart();
@@ -19,8 +23,9 @@ const CartView = () => {
     }
   }, [cart]);
 
+  // Showing cart
   const fetchCart = () => {
-    fetch("http://localhost:4005/b5/cart/get-cart", {
+    fetch(`${import.meta.env.VITE_API_URL}/cart/get-cart`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -28,6 +33,7 @@ const CartView = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         if (data.cart) {
           setCart(data.cart);
         } else {
@@ -37,8 +43,9 @@ const CartView = () => {
       .catch((error) => console.error("Error fetching cart:", error));
   };
 
+  // Removing
   const handleRemoveItem = (productId) => {
-    fetch(`http://localhost:4005/b5/cart/${productId}/remove-from-cart`, {
+    fetch(`${import.meta.env.VITE_API_URL}/cart/${productId}/remove-from-cart`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +59,9 @@ const CartView = () => {
             title: "Item Removed",
             icon: "success",
             text: "Item removed from cart successfully.",
-          }).then(() => fetchCart());
+          }).then(() => {
+            fetchCart()
+          });
         } else {
           Swal.fire({
             title: "Error",
@@ -66,8 +75,59 @@ const CartView = () => {
       );
   };
 
+  // getting the product name and price
+  useEffect(() =>{  
+    fetch(`${import.meta.env.VITE_API_URL}/products`, {
+        headers:{
+          'Content-Type': 'application/json',
+        }
+    })
+    .then(res => res.json())
+    .then(data =>{
+      console.log(data); 
+      setProducts(data.products)
+    })
+  },[])
+
+  const productIdtoName = {};
+  const productIdtoPrice = {};
+
+  products.forEach(product =>{
+    console.log(product)
+    productIdtoName[product._id] = product.name
+    productIdtoPrice[product._id] = product.price
+  })
+
+  const handleCheckout = () => {
+    fetch(`${import.meta.env.VITE_API_URL}/order/checkout`, {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(res => res.json())  
+    .then(data =>{
+      console.log(data); 
+      if(data.message === "Ordered successfully."){
+        Swal.fire({
+          title: 'Order Successful',
+          icon: 'success',
+          text: 'Order placed successfully.'
+        }).then(() => handleClearCart())
+      }else if(data.error === "No items to Checkout"){
+        Swal.fire({
+          title: 'Error',
+          icon: 'error',
+          text: 'No items in the cart to checkout.'
+        })
+      }
+    })
+  }
+
   const handleUpdateQuantity = (productId, quantity) => {
-    fetch("http://localhost:4005/b5/cart/update-cart-quantity", {
+    if (quantity < 1) return;
+    fetch(`${import.meta.env.VITE_API_URL}/cart/update-cart-quantity`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +160,7 @@ const CartView = () => {
   };
 
   const handleClearCart = () => {
-    fetch("http://localhost:4005/b5/cart/clear-cart", {
+    fetch(`${import.meta.env.VITE_API_URL}/cart/clear-cart`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -109,19 +169,29 @@ const CartView = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         if (data.message === "Cart cleared successfully") {
           Swal.fire({
             title: "Cart Cleared",
             icon: "success",
             text: "Cart cleared successfully.",
-          }).then(() => fetchCart());
+          }).then(() => {
+            fetchCart()
+          });
+        } else if(data.message === "Cart is already empty"){
+          Swal.fire({
+            title: "No items in the cart",
+            icon: "error",
+            text: "Cart is already empty"
+          })
         } else {
           Swal.fire({
             title: "Error",
             icon: "error",
             text: "Failed to clear cart. Please try again.",
-          });
+          })
         }
+        setTotalQuantity(0); 
       })
       .catch((error) => console.error("Error clearing cart:", error));
   };
@@ -142,27 +212,30 @@ const CartView = () => {
         </tr>
       );
     }
-    console.log(cart.cartItems);
-    return cart.cartItems.map((item) => (
-      <tr key={item.productId}>
-        <td>{item.productName}</td>
-        <td>&#8369;{item.price}</td>
-        <td>
-          <input
-            type="number"
-            min="1"
-            value={item.quantity}
-            onChange={(e) =>
-              handleUpdateQuantity(item.productId, parseInt(e.target.value))
-            }
-          />
+
+    return cart.cartItems.map((item, i) => (
+      <tr key={item.productId} className=" text-center">
+        <td>{productIdtoName[item.productId]}</td>
+        {console.log(item.quantity)} 
+        <td>&#8369;{productIdtoPrice[item.productId]}</td>
+        <td key={i} className=" d-flex justify-content-evenly">
+          <Button
+            variant="light"
+            onClick={() => handleUpdateQuantity(item.productId, item.quantity - 1)}>
+            <FaMinus />
+          </Button>  
+          <span>{item.quantity}</span>
+          <Button
+            variant="light"
+            onClick={() => handleUpdateQuantity(item.productId, item.quantity + 1)}>
+            <FaPlus />
+          </Button>
         </td>
         <td>&#8369;{item.subtotal}</td>
         <td>
           <Button
             variant="danger"
-            onClick={() => handleRemoveItem(item.productId)}
-          >
+            onClick={() => handleRemoveItem(item.productId)}>
             Remove
           </Button>
         </td>
@@ -170,27 +243,31 @@ const CartView = () => {
     ));
   };
 
-//   if (!user || !user.id) {
-//     return <Navigate to="/login" />;
-//   }
+  useEffect(() =>{
+    fetchCart()
+  },[handleClearCart, handleCheckout])
 
   return (
     <div className="p-5">
-      <h2 className="text-center">Your Shopping Cart</h2>
+      <Button variant='dark' as={Link} to='/products'>
+            <FaArrowLeft/>
+        </Button>
+      <h2 className="text-center my-4">Your Shopping Cart</h2>
       <Table striped bordered hover>
         <thead>
-          <tr>
+          <tr className=" text-center">
             <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Subtotal</th>
+            <th>Option</th>
           </tr>
         </thead>
         <tbody>{renderCartItems()}</tbody>
       </Table>
       <div className="text-center my-4">
         <Card.Text className='fs-4'>Total: &#8369;{totalQuantity}</Card.Text>
-        <Button variant="success mx-3">Checkout</Button>
+        <Button variant="success mx-3" onClick={handleCheckout}>Checkout</Button>
         <Button variant="danger" onClick={handleClearCart}>
           Clear Cart
         </Button>

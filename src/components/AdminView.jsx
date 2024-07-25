@@ -36,15 +36,15 @@ export default function AdminView({ productsData, fetchData }) {
 
     return(
         <>
-            <h1 className="text-center my-4"> Admin Dashboard</h1>
-            <div className='d-flex border mb-5 justify-content-center gap-4'>
+            <h1 className="text-center my-4 color-secondary"> Admin Dashboard</h1>
+            <div className='d-flex mb-5 justify-content-center gap-4'>
                 <Link 
                     to='/addProduct'
-                    className=' btn btn-info'>Add New Product
+                    className=' btn btn-info'>Add Product
                 </Link>
                 <Link 
                     to='/user-order'
-                    className=' btn btn-warning'>Show Users Orders
+                    className=' btn btn-warning'>Orders
                 </Link>
             </div>
             
@@ -65,6 +65,5 @@ export default function AdminView({ productsData, fetchData }) {
                 </tbody>
             </Table>    
         </>
-
         )
 }

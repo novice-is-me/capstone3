@@ -39,7 +39,7 @@ export default function Register() {
     
     e.preventDefault();
 
-    fetch('http://localhost:4005/b5/users/register', {
+    fetch(`${import.meta.env.VITE_API_URL}/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
