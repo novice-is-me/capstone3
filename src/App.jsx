@@ -13,6 +13,7 @@ import AddProduct from "./pages/AddProduct";
 import Products from "./pages/Products";
 import UserOrder from "./components/UserOrder";
 import CartView from './pages/CartView';
+import Home from "./pages/Home";
 
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
           <AppNavbar />
           <Container>
             <Routes>
+              <Route path="/" element={<Home/>}/>
               <Route path="/login" element={<Login />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/register" element={<Register />} />

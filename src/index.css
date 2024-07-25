@@ -5,3 +5,10 @@
   box-sizing: border-box;
 }
 
+.bg-orange{
+  background-color: #ee4d2d;
+}
+
+.color-secondary{
+  color: #d0011b;
+}

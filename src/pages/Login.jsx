@@ -94,7 +94,7 @@ const Login = () => {
     ? <Navigate to="/products"/>
     :
     <>  
-        <h1 className="my-5 text-center">Login</h1>
+        <h1 className="my-5 text-center color-secondary">Login</h1>
         <Form onSubmit={(e) => handleLogin(e)} className='border p-3'>
                 <Form.Group>
                     <Form.Label>Email address</Form.Label>
