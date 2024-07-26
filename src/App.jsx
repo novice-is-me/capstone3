@@ -14,6 +14,7 @@ import Products from "./pages/Products";
 import UserOrder from "./components/UserOrder";
 import CartView from './pages/CartView';
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
               <Route path='/products' element={<Products/>}/>
               <Route path='/addProduct' element={<AddProduct/>}/> 
               <Route path='/user-order' element={<UserOrder/>}/>
+              <Route path='/profile' element={<Profile/>}/>
             </Routes>
           </Container>
         </Router>

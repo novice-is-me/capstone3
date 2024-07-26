@@ -27,6 +27,7 @@ export default function AppNavbar(){
                         </>
                         :
                         <>
+                            <Nav.Link as={NavLink} to="/profile" exact="true" className='text-white fs-4'>Profile</Nav.Link>
                             <Nav.Link as={NavLink} to="/logout" exact="true" className='text-white fs-4'>Logout</Nav.Link>
                         </>
                     :
