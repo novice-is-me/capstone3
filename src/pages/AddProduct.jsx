@@ -39,7 +39,7 @@ export default function AddProduct(){
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);  
+            
             if(data.message === "Product already exists"){
 
                 Swal.fire({
@@ -76,7 +76,7 @@ export default function AddProduct(){
 
             (user.isAdmin === true && user.id !== null)
             ?
-            <div className=' p-5'>
+            <div className=' p-md-5 p-3'>
                 <Button variant='dark' as={Link} to='/products'>
                     <FaArrowLeft/>
                 </Button>

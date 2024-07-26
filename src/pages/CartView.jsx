@@ -31,15 +31,21 @@ const CartView = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
-      .then((res) => res.json())
+    .then((res) => {
+      if (res.status === 404) {
+        setCart(null); 
+        setTotalQuantity(0); 
+        return;
+      }
+      return res.json();
+    })
       .then((data) => {
-        console.log(data)
         if (data.cart) {
           setCart(data.cart);
         } else {
           setCart(null);
         }
-      })
+      }) 
       .catch((error) => console.error("Error fetching cart:", error));
   };
 
@@ -84,19 +90,10 @@ const CartView = () => {
     })
     .then(res => res.json())
     .then(data =>{
-      console.log(data); 
+     
       setProducts(data.products)
     })
   },[])
-
-  const productIdtoName = {};
-  const productIdtoPrice = {};
-
-  products.forEach(product =>{
-    console.log(product)
-    productIdtoName[product._id] = product.name
-    productIdtoPrice[product._id] = product.price
-  })
 
   const handleCheckout = () => {
     fetch(`${import.meta.env.VITE_API_URL}/order/checkout`, {
@@ -108,7 +105,7 @@ const CartView = () => {
     })
     .then(res => res.json())  
     .then(data =>{
-      console.log(data); 
+      
       if(data.message === "Ordered successfully."){
         Swal.fire({
           title: 'Order Successful',
@@ -169,7 +166,7 @@ const CartView = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+      
         if (data.message === "Cart cleared successfully") {
           Swal.fire({
             title: "Cart Cleared",
@@ -213,12 +210,12 @@ const CartView = () => {
       );
     }
 
+
     return cart.cartItems.map((item, i) => (
       <tr key={item.productId} className=" text-center">
-        <td>{productIdtoName[item.productId]}</td>
-        {console.log(item.quantity)} 
-        <td>&#8369;{productIdtoPrice[item.productId]}</td>
-        <td key={i} className=" d-flex justify-content-evenly">
+        <td className=" align-content-center">{productIdtoName[item.productId]}</td>
+        <td className=" align-content-center">&#8369;{productIdtoPrice[item.productId]}</td>
+        <td key={i} className=" d-flex justify-content-evenly align-items-center">
           <Button
             variant="light"
             onClick={() => handleUpdateQuantity(item.productId, item.quantity - 1)}>
@@ -231,7 +228,7 @@ const CartView = () => {
             <FaPlus />
           </Button>
         </td>
-        <td>&#8369;{item.subtotal}</td>
+        <td className=" align-content-center">&#8369;{item.subtotal}</td>
         <td>
           <Button
             variant="danger"
@@ -243,16 +240,20 @@ const CartView = () => {
     ));
   };
 
-  useEffect(() =>{
-    fetchCart()
-  },[handleClearCart, handleCheckout])
+  const productIdtoName = {};
+  const productIdtoPrice = {};
+
+  products.forEach(product =>{
+    productIdtoName[product._id] = product.name
+    productIdtoPrice[product._id] = product.price
+  })
 
   return (
     <div className="p-5">
       <Button variant='dark' as={Link} to='/products'>
             <FaArrowLeft/>
         </Button>
-      <h2 className="text-center my-4">Your Shopping Cart</h2>
+      <h2 className="text-center my-4 color-secondary text-uppercase">Your Shopping Cart</h2>
       <Table striped bordered hover>
         <thead>
           <tr className=" text-center">

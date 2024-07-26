@@ -5,6 +5,7 @@ import UserContext from '../UserContext';
 import { Card, Button } from 'react-bootstrap'; 
 import Swal from 'sweetalert2';
 import { Navigate } from 'react-router-dom';
+import { FaMinus, FaPlus } from 'react-icons/fa6';
 
 const ProductsView = () => {
 
@@ -57,7 +58,7 @@ const ProductsView = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            
             if (data.message === "Added to cart successfully") {
                 Swal.fire({
                     title: "Item Added to Cart Successfully",
@@ -80,25 +81,25 @@ const ProductsView = () => {
     ? <Navigate to='/login'/> 
     : <div className='p-5'>
         <Card >
-        <Card.Header className='fs-2 text-center bg-dark text-white'>{name}</Card.Header>
-        <Card.Body>
-            <Card.Title className='fs-3 text-center'>{description}</Card.Title>
-            <Card.Text className='fs-4 text-center'>Price: 
-                <span className='text-danger'> &#8369;{price}</span>
-            </Card.Text>
-            <Card.Text className='fs-4'>Quantity:</Card.Text>
-            <div className='d-flex border w-25 h-100 my-3'>
-                <p className=' w-25 bg-dark text-white m-0 text-center'
-                    style={{cursor: 'pointer'}}
-                    onClick={() => minusQuantity()}>-</p>
-                <p className=' w-100 text-center m-0'>{quantity}</p>
-                <p className=' w-25 bg-dark text-white m-0 text-center'
-                    style={{cursor: 'pointer'}}
-                    onClick={() => addQuantity()}>+</p>
-            </div>
-            <Button variant="primary my-3" 
-             onClick={handleAddToCart}>Add to Cart</Button>
-        </Card.Body>
+            <Card.Header className='fs-2 text-center bg-dark text-white'>{name}</Card.Header>
+            <Card.Body className=' text-center'>
+                <Card.Title className='fs-3'>{description}</Card.Title>
+                <Card.Text className='fs-4 fw-semibold'>Price: 
+                    <span className='text-danger'> &#8369;{price}</span>
+                </Card.Text>
+                <Card.Text className='fs-4 fw-semibold'>Quantity:</Card.Text>
+                <div className=' d-flex justify-content-center gap-4'>
+                    <Button variant='dark' onClick={() => minusQuantity()}>
+                        <FaMinus/>
+                    </Button>
+                    <p className='text-center m-0'>{quantity}</p>
+                    <Button variant='dark' onClick={() => addQuantity()}>
+                        <FaPlus/>
+                    </Button>
+                </div>
+                <Button variant="primary my-3 px-4 py-2" 
+                onClick={handleAddToCart}>Add to Cart</Button>
+            </Card.Body>
         </Card> 
     </div>
   )

@@ -9,6 +9,7 @@ import { Button } from 'react-bootstrap';
 
 
 import UserContext from '../UserContext';
+import { FaCartShopping } from 'react-icons/fa6';
 
 export default function Products() {
 
@@ -27,9 +28,8 @@ export default function Products() {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            
             if (data.message === "No products found") {
-                console.log(data.message);
                 setProducts([]);
             } else {
                 setProducts(data.products); 
@@ -51,7 +51,9 @@ export default function Products() {
                 <>
                 <UserView productsData={products} />
                 <Link to="/get-cart" style={{ position: 'absolute', top: '20px', right: '20px', zIndex: '100' }}>
-                    <Button variant="success">View Cart</Button>
+                    <Button variant="success">
+                        <FaCartShopping className=' me-2'/>
+                        View Cart</Button>
                 </Link>
                 </>
             )}
