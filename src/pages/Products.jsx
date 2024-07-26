@@ -6,6 +6,7 @@ import CartView from './CartView';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import OrderHistoryView from '../components/OrderHistoryView';
 
 
 import UserContext from '../UserContext';
@@ -50,8 +51,11 @@ export default function Products() {
             ) : (
                 <>
                 <UserView productsData={products} />
-                <Link to="/get-cart" style={{ position: 'absolute', top: '20px', right: '20px', zIndex: '100' }}>
+                <Link to="/get-cart" style={{ position: 'absolute', top: '20px', right: '40px', zIndex: '100' }}>
                     <Button variant="success">View Cart</Button>
+                </Link>
+                <Link to="/my-orders" style={{ position: 'absolute', top: '20px', left: '850px', zIndex: '100' }}>
+                    <Button variant="warning">Order History</Button>
                 </Link>
                 </>
             )}

@@ -15,6 +15,7 @@ import UserOrder from "./components/UserOrder";
 import CartView from './pages/CartView';
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import OrderHistoryView from './components/OrderHistoryView';
 
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
               <Route path='/addProduct' element={<AddProduct/>}/> 
               <Route path='/user-order' element={<UserOrder/>}/>
               <Route path='/profile' element={<Profile/>}/>
+              <Route path="/my-orders" element={<OrderHistoryView/>}/>
             </Routes>
           </Container>
         </Router>
