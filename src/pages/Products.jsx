@@ -6,6 +6,7 @@ import CartView from './CartView';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import OrderHistoryView from '../components/OrderHistoryView';
 
 
 import UserContext from '../UserContext';
@@ -49,12 +50,15 @@ export default function Products() {
                 <AdminView productsData={products} fetchData={fetchData} />
             ) : (
                 <>
+                <div className="d-flex my-4 justify-content-end gap-4">
+                    <Link to="/get-cart">
+                        <Button variant="success"><FaCartShopping className=' me-2'/>View Cart</Button>
+                    </Link>
+                    <Link to="/my-orders">
+                        <Button variant="warning">Order History</Button>
+                    </Link>
+                </div>
                 <UserView productsData={products} />
-                <Link to="/get-cart" style={{ position: 'absolute', top: '20px', right: '20px', zIndex: '100' }}>
-                    <Button variant="success">
-                        <FaCartShopping className=' me-2'/>
-                        View Cart</Button>
-                </Link>
                 </>
             )}
         </div>

@@ -6,6 +6,8 @@ import { Card, Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { Navigate } from 'react-router-dom';
 import { FaMinus, FaPlus } from 'react-icons/fa6';
+import { FaArrowLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ProductsView = () => {
 
@@ -80,6 +82,11 @@ const ProductsView = () => {
     (user.id === null && user.id === undefined) 
     ? <Navigate to='/login'/> 
     : <div className='p-5'>
+        <div className="py-3">
+            <Button variant="dark" as={Link} to="/products">
+                <FaArrowLeft />
+            </Button>
+        </div>
         <Card >
             <Card.Header className='fs-2 text-center bg-dark text-white'>{name}</Card.Header>
             <Card.Body className=' text-center'>
