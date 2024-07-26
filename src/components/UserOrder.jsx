@@ -25,7 +25,7 @@ const UserOrder = () => {
             }
         }).then(res => res.json())
         .then(data =>{
-            console.log(data);
+            
             setData(data.orders);
         })
 
@@ -39,7 +39,7 @@ const UserOrder = () => {
             }
         }).then(res => res.json())
         .then(data => {
-            console.log(data);
+            
             setUsername(data.users)
         })
     },[])
@@ -53,7 +53,7 @@ const UserOrder = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            
             setProductName(data.products); 
         })
     },[])
@@ -71,21 +71,19 @@ const UserOrder = () => {
         productIdtoPrice[product._id] = `${product.price}`;
     })
 
-    console.log(productIdtoPrice)
   return (
-    // Papagandahin pa ang UI 
+    
     (user.isAdmin)
     ? 
-    <div className='p-5'>
+    <div className=' p-md-5 p-3'>
         <Button variant='dark' as={Link} to='/products'>
             <FaArrowLeft/>
         </Button>
-        <h1 className='text-center color-secondary mb-4'>User Order Overview</h1>
+        <h1 className='text-center color-secondary mb-4 mt-5 mt-md-0'>User Order Overview</h1>
         {data.length > 0 
         ?
         (data.map((order, i) => (
             <div key={i} className='border p-3 my-2'>
-                {console.log(order)}
                 <h3 className=' mb-2 bg-orange-light p-2'>{userIdToName[order.userId]}</h3>
                 <Table>
                     <thead>

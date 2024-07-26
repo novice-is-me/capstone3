@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import ProductsCatalogCards from './ProductsCatalogCards';
-// import ProductSearch from './ProductSearch';
+import HotProducts from '../pages/HotProducts';
 
 export default function UserView({productsData}) {
     const [products, setProducts] = useState([])
@@ -25,7 +25,8 @@ export default function UserView({productsData}) {
 
     return(
         <div className='p-5'>
-            <h1 className='text-uppercase fw-bold text-center color-secondary'>Our Products</h1> 
+            <HotProducts/>
+            <h1 className='text-uppercase fw-bold color-secondary'>Our Products</h1> 
             <div className='d-flex flex-wrap justify-content-evenly my-5 gap-4'> 
                 {products}
             </div>

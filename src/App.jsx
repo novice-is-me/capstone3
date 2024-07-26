@@ -52,10 +52,7 @@ function App() {
 
   useEffect(() => {
     console.log(user);
-    console.log(localStorage);
   }, [user]);
-
-  console.log(user); 
 
   return (
     <>

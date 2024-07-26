@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import {  Link, NavLink } from 'react-router-dom';
 import UserContext from '../UserContext';
+import { FaBagShopping } from 'react-icons/fa6';
 
 
 export default function AppNavbar(){
@@ -14,7 +15,10 @@ export default function AppNavbar(){
 	return (
 		<Navbar expand="lg" className="bg-orange p-4">
           <Container>
-            <Navbar.Brand as={Link} to="/" className='text-white me-auto fs-2'>ECommerceAPI</Navbar.Brand>
+            <Navbar.Brand as={Link} to="/" className=' d-flex text-white me-auto fs-2 align-items-center'>
+              <FaBagShopping className=' me-2'/>
+              ECommerceAPI
+            </Navbar.Brand> 
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className=" ms-auto">

@@ -75,7 +75,6 @@ const Login = () => {
                 id: data.user._id,
                 isAdmin: data.user.isAdmin
             });
-            console.log(user);
         })
     }
 
