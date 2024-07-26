@@ -16,6 +16,7 @@ import CartView from './pages/CartView';
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import OrderHistoryView from './components/OrderHistoryView';
+import AdminUserControl from "./components/AdminUserControl";
 
 
 function App() {
@@ -73,6 +74,7 @@ function App() {
               <Route path='/user-order' element={<UserOrder/>}/>
               <Route path='/profile' element={<Profile/>}/>
               <Route path="/my-orders" element={<OrderHistoryView/>}/>
+              <Route path="/admin-update" element={<AdminUserControl/>}/>
             </Routes>
           </Container>
         </Router>

@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import ResetPassword from "../components/ResetPassword";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import UserContext from "../UserContext";
+import { FaPenToSquare, FaX } from "react-icons/fa6";
 
 export default function Profile() {
   const { user } = useContext(UserContext);
@@ -15,6 +16,9 @@ export default function Profile() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [mobileNo, setMobileNo] = useState("");
+
+  const [profileModal, setProfileModal] = useState(false);
+  const [passwordModal, setPasswordModal] = useState(false);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/users/details`, {
@@ -95,6 +99,7 @@ export default function Profile() {
     handleUpdateProfile();
   };
 
+
   return (
     <>
       {user.id === null && user.id === undefined ? (
@@ -107,58 +112,95 @@ export default function Profile() {
                 <FaArrowLeft />
               </Button>
             </div>
-            <Col className="mt-5 p-5 border border-4 border-success rounded-4">
-              <h1 className="mb-5">Profile</h1>
-              <h2 className="mt-3">{`${firstName} ${lastName}`}</h2>{" "}
-              <hr />
-              <h4>Contacts</h4>
-              <ul>
-                <li>Email: {email}</li>
-                <li>Mobile No: {mobileNo}</li>{" "}
-              </ul>
+            <Col className="mt-5 p-md-5 p-4 border border-4 border-warning rounded-4">
+              <div className=" d-flex w-100 gap-5">
+                <div className=" d-none d-md-block w-25">
+                  <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt=""
+                   className=" object-fit-cover rounded-circle w-100" />
+                </div>
+                <div className=" w-100"> 
+                 <div>
+                  <h1 className=" text-uppercase text-center text-md-start">Welcome Back!</h1>
+                  <h3 className=" fs-1 color-secondary text-center text-md-start">
+                    {`${firstName} ${lastName}`}
+                  </h3>
+                 </div>
+                 <hr />
+                 <div>
+                  <h4>Contacts</h4>
+                    <ul>
+                      <li><span className=" fw-semibold">Email:</span> {email}</li>
+                      <li><span className=" fw-semibold">Mobile No:</span> {mobileNo}</li>{" "}
+                    </ul>
+                 </div>
+                 <div className=" mt-3 d-flex gap-4">
+                    <Button variant="success" 
+                      className=" d-flex align-items-center"
+                      onClick={() => setProfileModal(true)}>
+                      <FaPenToSquare className=" me-3 d-md-block d-none"/>
+                      Edit Profile
+                    </Button>
+                    <Button onClick={() => setPasswordModal(true)}>
+                        Update Password
+                    </Button>
+                 </div>
+                </div>
+              </div>
             </Col>
           </Row>
-          <Row className="pt-4">
-            <Col>
-              <h3>Update Profile</h3>
-              <Form onSubmit={handleSubmit}>
-                {" "}
-                <Form.Group className="mb-3">
-                  <Form.Label>First Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Last Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Mobile Number</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={mobileNo}
-                    onChange={(e) => setMobileNo(e.target.value)}
-                  />
-                </Form.Group>
-                <Button variant="primary" type="submit" className="my-3">
-                  {" "}
-                  Update Profile
-                </Button>
-              </Form>
-            </Col>
-          </Row>
-          <Row className="pt-4 mt-4">
-            <Col>
-              <ResetPassword />
-            </Col>
-          </Row>
+          
+          {profileModal && (
+            <Modal show={profileModal}>
+              <Row className="p-5">
+                <Col>
+                  <FaX className="mb-3 d-flex ms-auto" onClick={() => setProfileModal(false)}/> 
+                  <h3>Update Profile</h3>
+                  <Form onSubmit={handleSubmit}>
+                    {" "}
+                    <Form.Group className="mb-3">
+                      <Form.Label>First Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Last Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Mobile Number</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={mobileNo}
+                        onChange={(e) => setMobileNo(e.target.value)}
+                      />
+                    </Form.Group>
+                    <Button variant="primary" type="submit" className="my-3">
+                      {" "}
+                      Update Profile
+                    </Button>
+                  </Form>
+                </Col>
+              </Row>
+            </Modal>
+          )}
+          
+          {passwordModal && (
+            <Modal show={passwordModal}>
+              <Row className="p-5">
+                <Col>
+                  <FaX className="mb-3 d-flex ms-auto" onClick={() => setPasswordModal(false)}/> 
+                  <ResetPassword />
+                </Col>
+              </Row>
+            </Modal>
+          )}
         </>
       )}
     </>

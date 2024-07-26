@@ -46,6 +46,10 @@ export default function AdminView({ productsData, fetchData }) {
                     to='/user-order'
                     className=' btn btn-warning'>Orders
                 </Link>
+                <Link 
+                    to='/admin-update'
+                    className=' btn btn-dark'> View Users
+                </Link>
             </div>
             
             <Table striped bordered hover responsive>
