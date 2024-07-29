@@ -9,13 +9,13 @@
 
 ## User Credentials
 - **Admin User**
-- **email**: admin@email.com
-- **password**: admin123
+- **email**: zoro@gmail.com
+- **password**: zoro12345
 
 
 - **Dummy Customer**
-- **email**: customer@mail.com
-- **password**: customer123
+- **email**: harry@mail.com
+- **password**: harry12345
 
 
 
