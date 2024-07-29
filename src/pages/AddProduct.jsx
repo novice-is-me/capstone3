@@ -12,7 +12,6 @@ export default function AddProduct(){
 
     const {user} = useContext(UserContext);
 
-    //input states
     const [name,setName] = useState("");
     const [description,setDescription] = useState("");
     const [price,setPrice] = useState("");

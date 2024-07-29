@@ -18,7 +18,6 @@ import Profile from "./pages/Profile";
 import OrderHistoryView from './components/OrderHistoryView';
 import AdminUserControl from "./components/AdminUserControl";
 
-
 function App() {
   const [user, setUser] = useState({
     id: null,
